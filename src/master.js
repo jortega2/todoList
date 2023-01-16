@@ -1,10 +1,12 @@
+import PubSub from 'pubsub-js';
 import createProject from './project';
 
 function masterProject() {
   const _projects = [];
   let selectedProject = null;
-
-  function deleteProject(id) {
+  PubSub.subscribe('deleteProject', deleteProject);
+  PubSub.subscribe('editProject', editProject);
+  function deleteProject(data, id) {
     _projects.splice(id, 1);
   }
 
@@ -37,6 +39,7 @@ function masterProject() {
     editProject,
     setSelectedProject,
     getSelectedProject,
+    _projects,
   };
 }
 const master = masterProject();

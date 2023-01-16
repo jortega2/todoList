@@ -54,8 +54,8 @@ function elementCreatorFactory() {
   function createDescElement(desc) {
     const descElement = document.createElement('div');
     descElement.innerText = desc;
-    descElement.classList.add('hidden');
     descElement.classList.add('projectDesc');
+    descElement.style.display = 'none';
 
     return descElement;
   }
@@ -70,7 +70,6 @@ function elementCreatorFactory() {
     const delButton = createDelButton(id);
     delButtonProjectListener(delButton, id);
     const editButton = createEditButton();
-    editButtonProjectListener(editButton, id);
 
     project.appendChild(editButton);
     project.appendChild(delButton);
@@ -94,7 +93,6 @@ function elementCreatorFactory() {
     const delButton = createDelButton(id);
     delButtonTasktListener(delButton, id);
     const editButton = createEditButton();
-    editButtonTasktListener(editButton, id);
 
     task.appendChild(editButton);
     task.appendChild(delButton);
