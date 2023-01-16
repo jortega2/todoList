@@ -1,7 +1,7 @@
 import PubSub from 'pubsub-js';
 
 function elementCreatorFactory() {
-  function createDelButton(id) {
+  function createDelButton() {
     const delButton = document.createElement('button');
     delButton.classList.add('imageButton');
     delButton.classList.add('delButton');
@@ -42,6 +42,7 @@ function elementCreatorFactory() {
     const editButton = document.createElement('button');
     editButton.classList.add('imageButton');
     editButton.classList.add('editButton');
+    editButton.classList.add('popup');
 
     const editImg = document.createElement('img');
     editImg.src = '../images/archive-edit-outline.png';
@@ -60,6 +61,47 @@ function elementCreatorFactory() {
     return descElement;
   }
 
+  function createEditProjectForm() {
+    const form = document.createElement('form');
+    form.classList.add('editProjectForm');
+
+    const header = document.createElement('h3');
+    header.textContent = 'Edit Project';
+
+    const titleLabel = document.createElement('label');
+    titleLabel.setAttribute('for', 'title');
+    titleLabel.textContent = 'Title';
+
+    const titleInput = document.createElement('input');
+    titleInput.type = 'text';
+    titleInput.name = 'title';
+    titleInput.id = 'title';
+
+    const descLabel = document.createElement('label');
+    descLabel.setAttribute('for', 'desc');
+    descLabel.textContent = 'Description';
+
+    const descInput = document.createElement('textarea');
+    descInput.name = 'desc';
+    descInput.id = 'desc';
+    descInput.setAttribute('cols', '10');
+    descInput.setAttribute('rows', '10');
+
+    const subButton = document.createElement('button');
+    subButton.textContent = 'Submit';
+    subButton.type = 'submit';
+    subButton.id = 'submit';
+
+    form.appendChild(header);
+    form.appendChild(titleLabel);
+    form.appendChild(titleInput);
+    form.appendChild(descLabel);
+    form.appendChild(descInput);
+    form.appendChild(subButton);
+
+    return form;
+  }
+
   function createProjectElement(title, desc, id) {
     const project = document.createElement('div');
     project.classList.add('project');
@@ -67,11 +109,13 @@ function elementCreatorFactory() {
     project.setAttribute('data-projectID', id);
 
     const descElement = createDescElement(desc);
-    const delButton = createDelButton(id);
+    const delButton = createDelButton();
     delButtonProjectListener(delButton, id);
     const editButton = createEditButton();
+    const form = createEditProjectForm();
 
     project.appendChild(editButton);
+    project.appendChild(form);
     project.appendChild(delButton);
     project.appendChild(descElement);
 
