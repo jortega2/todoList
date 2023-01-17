@@ -167,3 +167,11 @@ button {
   grid-gap: 10px;
   border-bottom: solid;
 }
+
+.selected {
+  background-color: red;
+}
+
+.selected >.hidden{
+  display:block;
+}

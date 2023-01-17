@@ -33,6 +33,7 @@ function masterProject() {
 
   function setSelectedProject(id) {
     selectedProject = _projects[id];
+    PubSub.publishSync('selectedProjectChanged');
   }
 
   function getSelectedProject() {

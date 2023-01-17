@@ -58,7 +58,7 @@ function elementCreatorFactory() {
     const descElement = document.createElement('div');
     descElement.innerText = desc;
     descElement.classList.add('description');
-    descElement.style.display = 'none';
+    descElement.classList.add('hidden');
 
     return descElement;
   }
@@ -238,6 +238,9 @@ function elementCreatorFactory() {
     project.appendChild(form);
     project.appendChild(delButton);
     project.appendChild(descElement);
+    project.onclick = () => {
+      PubSub.publishSync('projectClicked', project);
+    };
 
     return project;
   }
@@ -275,6 +278,9 @@ function elementCreatorFactory() {
     task.appendChild(formElement);
     task.appendChild(delButton);
     task.appendChild(descElement);
+    task.onclick = () => {
+      PubSub.publishSync('taskClicked', task);
+    };
 
     return task;
   }
