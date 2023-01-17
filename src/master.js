@@ -6,6 +6,7 @@ function masterProject() {
   let selectedProject = null;
   PubSub.subscribe('deleteProject', deleteProject);
   PubSub.subscribe('editProject', editProject);
+  PubSub.subscribe('editTask', editTask);
 
   function deleteProject(data, id) {
     _projects.splice(id, 1);
@@ -15,6 +16,7 @@ function masterProject() {
   function makeProject(projectInfo) {
     const newProject = createProject(projectInfo.title, projectInfo.desc);
     _projects.push(newProject);
+    PubSub.publishSync('masterChanged');
   }
 
   function editProject(msg, data) {
@@ -37,6 +39,26 @@ function masterProject() {
     return selectedProject;
   }
 
+  function addTaskToSelected(taskInfo) {
+    if (selectedProject === null) {
+      alert('no list has been selected');
+    } else {
+      selectedProject.addTask(taskInfo);
+      PubSub.publishSync('selectedProjectChanged');
+    }
+  }
+
+  function editTask(msg, data) {
+    if (selectedProject === null) {
+      alert('no list has been selected');
+    } else {
+      const id = data[1];
+      const taskInfo = data[0];
+      selectedProject.editTask(id, taskInfo);
+      PubSub.publishSync('selectedProjectChanged');
+    }
+  }
+
   return {
     deleteProject,
     makeProject,
@@ -44,7 +66,7 @@ function masterProject() {
     editProject,
     setSelectedProject,
     getSelectedProject,
-    _projects,
+    addTaskToSelected,
   };
 }
 const master = masterProject();

@@ -212,6 +212,15 @@ function elementCreatorFactory() {
     PubSub.publishSync('editProject', [projectInfo, id]);
   }
 
+  function editTask(event) {
+    event.preventDefault();
+    const id = this.parentNode.getAttribute('data-taskid');
+    const myFormData = new FormData(event.target);
+    const taskInfo = Object.fromEntries(myFormData.entries());
+
+    PubSub.publishSync('editTask', [taskInfo, id]);
+  }
+
   function createProjectElement(projectInfo, id) {
     const project = document.createElement('div');
     project.classList.add('project');
@@ -257,6 +266,7 @@ function elementCreatorFactory() {
     const editButton = createEditButton();
     const descElement = createDescElement(taskInfo.getDesc());
     const formElement = createEditTaskForm();
+    formElement.addEventListener('submit', editTask);
 
     task.appendChild(statusButton);
     task.appendChild(titleElement);

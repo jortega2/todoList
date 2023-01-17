@@ -1,43 +1,66 @@
-// new class to handle inputed data into new project/task
-// add some dummy projects/tasks directly into master
-// test the elementLoader
-// add the highlight feature
-// make new class to handle input
+import PubSub from 'pubsub-js';
+import master from './master';
 
-// const popups = [...document.getElementsByClassName('popup')];
+function inputHandlerFactory() {
+  let popups = [...document.getElementsByClassName('popup')];
+  popups.forEach((p) => {
+    p.addEventListener('click', toggle);
+  });
 
-// function toggle(event) {
-//   popups.forEach((p) => {
-//     if (p !== event) {
-//       if (p.classList.contains('show')) {
-//         p.classList.remove('show');
-//       }
-//     } else {
-//       event.classList.toggle('show');
-//     }
-//   });
-// }
+  const createProject = document.querySelector('.projectForm');
+  createProject.addEventListener('submit', newProject);
 
-// popups.forEach((p) => {
-//   p.addEventListener('click', () => {
-//     toggle(p);
-//   });
-// });
+  const createTask = document.querySelector('.taskForm');
+  createTask.addEventListener('submit', newTask);
 
-// window.addEventListener('click', ({ target }) => {
-//   // need this to only trigger on elements that are not popup buttons or forms
-//   if (target instanceof HTMLImageElement) {
-//     if (target.parentNode.classList.contains('popup')) {
-//       return;
-//     }
-//   }
-//   if (target.parentNode instanceof HTMLFormElement || target instanceof HTMLFormElement) {
-//     return;
-//   }
-//   popups.forEach((p) => p.classList.remove('show'));
-// });// toggle the status button
+  window.addEventListener('click', ({ target }) => {
+    if (target instanceof HTMLImageElement) {
+      if (target.parentNode.classList.contains('popup')) {
+        return;
+      }
+    }
+    if (target.parentNode instanceof HTMLFormElement || target instanceof HTMLFormElement) {
+      return;
+    }
+    popups.forEach((p) => p.classList.remove('show'));
+  });
 
-// this is good for static buttons. but what about the dynamic ones to be loaded later?
-// have elementLoader contain an array of popups.
-// each time a new project/task created update the popups
-// element loader will handle the event listeners
+  PubSub.subscribe('pageRefreshed', refreshPopup);
+
+  function refreshPopup(msg) {
+    popups = [...document.getElementsByClassName('popup')];
+    popups.forEach((p) => {
+      p.addEventListener('click', toggle);
+    });
+  }
+
+  function toggle(event) {
+    const { parentNode } = event.target;
+    popups.forEach((p) => {
+      if (p !== parentNode) {
+        if (p.classList.contains('show')) {
+          p.classList.remove('show');
+        }
+      } else {
+        p.classList.toggle('show');
+      }
+    });
+  }
+
+  function newProject(event) {
+    event.preventDefault();
+    const myFormData = new FormData(event.target);
+    const projectInfo = Object.fromEntries(myFormData.entries());
+    master.makeProject(projectInfo);
+  }
+
+  function newTask(event) {
+    event.preventDefault();
+    const myFormData = new FormData(event.target);
+    const taskInfo = Object.fromEntries(myFormData.entries());
+    master.addTaskToSelected(taskInfo);
+  }
+}
+
+const inputHandler = inputHandlerFactory();
+export default inputHandler;
