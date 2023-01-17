@@ -18,7 +18,7 @@
       <button class='createProject imageButton popup'>
         <img src="../images/archive-plus-outline.png" alt="create a project">
       </button>
-      <form action='post' class = 'form'>
+      <form action='post' class = 'projectForm form'>
         <h1>New Project Entry</h1>
         <label for="title">Title</label>
         <input type="text" name="title" id="title" required>
@@ -37,7 +37,7 @@
       <button class='createTask imageButton popup'>
         <img src="../images/archive-plus.png" alt="create a task">
       </button>
-      <form action="post" class='form'>
+      <form action="post" class='taskForm form'>
         <h1>New Task Entry</h1>
         <label for="title">Title</label>
         <input type="text" name="title" id="title">
@@ -54,13 +54,16 @@
       </form>
       
     </div>
-    <div class="contentBar">
+    <div>
       <div class="contentBarHeader">
         <h2>Status</h2>
         <h2>Title</h2>
         <h2>Date Due</h2>
         <h2>Edit</h2>
         <h2>Delete</h2>
+      </div>
+      <div class="contentBar">
+        
       </div>
     </div>
   </div>

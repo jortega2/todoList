@@ -49,13 +49,15 @@ function elementCreatorFactory() {
 
     editButton.appendChild(editImg);
 
+    PubSub.publishSync('popupCreated', editButton);
+
     return editButton;
   }
 
   function createDescElement(desc) {
     const descElement = document.createElement('div');
     descElement.innerText = desc;
-    descElement.classList.add('projectDesc');
+    descElement.classList.add('description');
     descElement.style.display = 'none';
 
     return descElement;
@@ -201,17 +203,27 @@ function elementCreatorFactory() {
     return dateElement;
   }
 
-  function createProjectElement(title, desc, id) {
+  function editProject(event) {
+    event.preventDefault();
+    const id = this.parentNode.getAttribute('data-projectid');
+    const myFormData = new FormData(event.target);
+    const projectInfo = Object.fromEntries(myFormData.entries());
+
+    PubSub.publishSync('editProject', [projectInfo, id]);
+  }
+
+  function createProjectElement(projectInfo, id) {
     const project = document.createElement('div');
     project.classList.add('project');
-    project.innerText = title;
+    project.innerText = projectInfo.getTitle();
     project.setAttribute('data-projectID', id);
 
-    const descElement = createDescElement(desc);
+    const descElement = createDescElement(projectInfo.getDesc());
     const delButton = createDelButton();
     delButtonProjectListener(delButton, id);
     const editButton = createEditButton();
     const form = createEditProjectForm();
+    form.addEventListener('submit', editProject);
 
     project.appendChild(editButton);
     project.appendChild(form);
@@ -222,19 +234,28 @@ function elementCreatorFactory() {
   }
 
   // create taskElement
-  function createTaskElement(title, desc, dueDate, priority, id) {
+  function createTaskElement(taskInfo, id) {
     const task = document.createElement('div');
     const titleElement = document.createElement('div');
-    titleElement.innerText = title;
+    titleElement.innerText = taskInfo.getTitle();
     task.classList.add('task');
     task.setAttribute('data-taskID', id);
 
+    // priority
+    if (taskInfo.getPriority() === '0') {
+      task.classList.add('normal');
+    } else if (taskInfo.getPriority() === '1') {
+      task.classList.add('high');
+    } else if (taskInfo.getPriority() === '2') {
+      task.classList.add('highest');
+    }
+
     const statusButton = createStatusButton();
-    const dateElement = createDateElement(dueDate);
+    const dateElement = createDateElement(taskInfo.getDueDate());
     const delButton = createDelButton(id);
     delButtonTasktListener(delButton, id);
     const editButton = createEditButton();
-    const descElement = createDescElement(desc);
+    const descElement = createDescElement(taskInfo.getDesc());
     const formElement = createEditTaskForm();
 
     task.appendChild(statusButton);

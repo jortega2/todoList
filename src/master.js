@@ -6,8 +6,10 @@ function masterProject() {
   let selectedProject = null;
   PubSub.subscribe('deleteProject', deleteProject);
   PubSub.subscribe('editProject', editProject);
+
   function deleteProject(data, id) {
     _projects.splice(id, 1);
+    PubSub.publishSync('masterChanged');
   }
 
   function makeProject(projectInfo) {
@@ -15,9 +17,12 @@ function masterProject() {
     _projects.push(newProject);
   }
 
-  function editProject(id, projectInfo) {
+  function editProject(msg, data) {
+    const projectInfo = data[0];
+    const id = data[1];
     _projects[id].setTitle(projectInfo.title);
     _projects[id].setDesc(projectInfo.desc);
+    PubSub.publishSync('masterChanged');
   }
 
   function getProjects() {
@@ -43,4 +48,16 @@ function masterProject() {
   };
 }
 const master = masterProject();
+master.makeProject({ title: 'monday', desc: 'today is monday' });
+master.makeProject({ title: 'tuesday', desc: 'today is tuesday' });
+master.makeProject({ title: 'wednesday', desc: 'today is wednesday' });
+master.setSelectedProject(0);
+const project = master.getSelectedProject();
+project.addTask({
+  title: 'task 1', desc: 'task 1 description', dueDate: Date(), priority: 'normal',
+});
+project.addTask({ title: 'task 2', dueDate: Date(), priority: 'normal' });
+project.addTask({ title: 'task 3', dueDate: Date(), priority: 'normal' });
+project.addTask({ title: 'task 4', dueDate: Date(), priority: 'normal' });
+
 export default master;
