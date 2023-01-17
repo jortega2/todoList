@@ -2,6 +2,7 @@ import elementCreator from './elementCreator';
 import master from './master';
 
 const projectsBar = document.querySelector('.projectsBar');
+const content = document.querySelector('.contentBar');
 
 projectsBar.appendChild(elementCreator.createProjectElement('monday', 'today is monday', 0));
 projectsBar.appendChild(elementCreator.createProjectElement('teusday', 'today is teusday', 1));
@@ -11,10 +12,11 @@ projectsBar.appendChild(elementCreator.createProjectElement('friday', 'today is 
 projectsBar.appendChild(elementCreator.createProjectElement('saturday', 'today is saturday', 5));
 projectsBar.appendChild(elementCreator.createProjectElement('sunday', 'today is sunday', 6));
 
+content.appendChild(elementCreator.createTaskElement('Walk the dog', 'Need to walk lil timmy', Date(), 'high', 0));
+content.appendChild(elementCreator.createTaskElement('Go to the gym', 'Gains', Date(), 'high', 1));
+
 const popups = [...document.getElementsByClassName('popup')];
-console.log(popups);
 // this is good for static buttons. but what about the dynamic ones to be loaded later?
-// have elementCreator create a editProject form for each project.
 // have elementLoader contain an array of poups.
 // each time a new project/task created update the popups
 // element loader will handle the event listeners
@@ -47,4 +49,4 @@ window.addEventListener('click', ({ target }) => {
     return;
   }
   popups.forEach((p) => p.classList.remove('show'));
-});
+});// toggle the status button
