@@ -7,8 +7,6 @@ function elementLoaderFactory() {
   const bar = document.querySelector('.projectsBar');
   PubSub.subscribe('masterChanged', loadBar);
   PubSub.subscribe('selectedProjectChanged', loadContent);
-  loadBar();
-  loadContent();
 
   function clearBar() {
     bar.innerText = '';

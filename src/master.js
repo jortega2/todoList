@@ -71,16 +71,16 @@ function masterProject() {
   };
 }
 const master = masterProject();
-master.makeProject({ title: 'monday', desc: 'today is monday' });
-master.makeProject({ title: 'tuesday', desc: 'today is tuesday' });
-master.makeProject({ title: 'wednesday', desc: 'today is wednesday' });
-master.setSelectedProject(0);
-const project = master.getSelectedProject();
-project.addTask({
-  title: 'task 1', desc: 'task 1 description', dueDate: Date(), priority: 'normal',
-});
-project.addTask({ title: 'task 2', dueDate: Date(), priority: 'normal' });
-project.addTask({ title: 'task 3', dueDate: Date(), priority: 'normal' });
-project.addTask({ title: 'task 4', dueDate: Date(), priority: 'normal' });
+// master.makeProject({ title: 'monday', desc: 'today is monday' });
+// master.makeProject({ title: 'tuesday', desc: 'today is tuesday' });
+// master.makeProject({ title: 'wednesday', desc: 'today is wednesday' });
+// master.setSelectedProject(0);
+// const project = master.getSelectedProject();
+// project.addTask({
+//   title: 'task 1', desc: 'task 1 description', dueDate: Date(), priority: 'normal',
+// });
+// project.addTask({ title: 'task 2', dueDate: Date(), priority: 'normal' });
+// project.addTask({ title: 'task 3', dueDate: Date(), priority: 'normal' });
+// project.addTask({ title: 'task 4', dueDate: Date(), priority: 'normal' });
 
 export default master;

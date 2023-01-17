@@ -26,18 +26,6 @@ function elementCreatorFactory() {
     });
   }
 
-  // function editButtonProjectListener(button, id) {
-  //   button.addEventListener('click', () => {
-  //     PubSub.publishSync('editProject', id);
-  //   });
-  // }
-
-  // function editButtonTasktListener(button, id) {
-  //   button.addEventListener('click', () => {
-  //     PubSub.publishSync('editTask', id);
-  //   });
-  // }
-
   function createEditButton() {
     const editButton = document.createElement('button');
     editButton.classList.add('imageButton');
@@ -64,8 +52,8 @@ function elementCreatorFactory() {
   }
 
   function createEditProjectForm() {
-    const form = document.createElement('form');
-    form.classList.add('form');
+    const formElement = document.createElement('form');
+    formElement.classList.add('form');
 
     const header = document.createElement('h3');
     header.textContent = 'Edit Project';
@@ -95,19 +83,19 @@ function elementCreatorFactory() {
     subButton.type = 'submit';
     subButton.id = 'submit';
 
-    form.appendChild(header);
-    form.appendChild(titleLabel);
-    form.appendChild(titleInput);
-    form.appendChild(descLabel);
-    form.appendChild(descInput);
-    form.appendChild(subButton);
+    formElement.appendChild(header);
+    formElement.appendChild(titleLabel);
+    formElement.appendChild(titleInput);
+    formElement.appendChild(descLabel);
+    formElement.appendChild(descInput);
+    formElement.appendChild(subButton);
 
-    return form;
+    return formElement;
   }
 
   function createEditTaskForm() {
-    const form = document.createElement('form');
-    form.classList.add('form');
+    const formElement = document.createElement('form');
+    formElement.classList.add('form');
 
     const header = document.createElement('h3');
     header.textContent = 'Edit Task';
@@ -166,18 +154,18 @@ function elementCreatorFactory() {
     subButton.type = 'submit';
     subButton.id = 'submit';
 
-    form.appendChild(header);
-    form.appendChild(titleLabel);
-    form.appendChild(titleInput);
-    form.appendChild(descLabel);
-    form.appendChild(descInput);
-    form.appendChild(priorityLabel);
-    form.appendChild(priorityInput);
-    form.appendChild(dueDateLabel);
-    form.appendChild(dueDateInput);
-    form.appendChild(subButton);
+    formElement.appendChild(header);
+    formElement.appendChild(titleLabel);
+    formElement.appendChild(titleInput);
+    formElement.appendChild(descLabel);
+    formElement.appendChild(descInput);
+    formElement.appendChild(priorityLabel);
+    formElement.appendChild(priorityInput);
+    formElement.appendChild(dueDateLabel);
+    formElement.appendChild(dueDateInput);
+    formElement.appendChild(subButton);
 
-    return form;
+    return formElement;
   }
 
   function createStatusButton() {
@@ -231,11 +219,11 @@ function elementCreatorFactory() {
     const delButton = createDelButton();
     delButtonProjectListener(delButton, id);
     const editButton = createEditButton();
-    const form = createEditProjectForm();
-    form.addEventListener('submit', editProject);
+    const formElement = createEditProjectForm();
+    formElement.addEventListener('submit', editProject);
 
     project.appendChild(editButton);
-    project.appendChild(form);
+    project.appendChild(formElement);
     project.appendChild(delButton);
     project.appendChild(descElement);
     project.onclick = () => {
