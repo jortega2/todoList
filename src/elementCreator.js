@@ -45,7 +45,7 @@ function elementCreatorFactory() {
     editButton.classList.add('popup');
 
     const editImg = document.createElement('img');
-    editImg.src = '../images/archive-edit-outline.png';
+    editImg.src = '../images/archive-edit.png';
 
     editButton.appendChild(editImg);
 
@@ -63,7 +63,7 @@ function elementCreatorFactory() {
 
   function createEditProjectForm() {
     const form = document.createElement('form');
-    form.classList.add('editProjectForm');
+    form.classList.add('form');
 
     const header = document.createElement('h3');
     header.textContent = 'Edit Project';
@@ -76,6 +76,7 @@ function elementCreatorFactory() {
     titleInput.type = 'text';
     titleInput.name = 'title';
     titleInput.id = 'title';
+    titleInput.required = true;
 
     const descLabel = document.createElement('label');
     descLabel.setAttribute('for', 'desc');
@@ -102,6 +103,104 @@ function elementCreatorFactory() {
     return form;
   }
 
+  function createEditTaskForm() {
+    const form = document.createElement('form');
+    form.classList.add('form');
+
+    const header = document.createElement('h3');
+    header.textContent = 'Edit Task';
+
+    const titleLabel = document.createElement('label');
+    titleLabel.setAttribute('for', 'title');
+    titleLabel.textContent = 'Title';
+
+    const titleInput = document.createElement('input');
+    titleInput.type = 'text';
+    titleInput.name = 'title';
+    titleInput.id = 'title';
+    titleInput.required = true;
+
+    const descLabel = document.createElement('label');
+    descLabel.setAttribute('for', 'desc');
+    descLabel.textContent = 'Description';
+
+    const descInput = document.createElement('textarea');
+    descInput.name = 'desc';
+    descInput.id = 'desc';
+    descInput.setAttribute('cols', '10');
+    descInput.setAttribute('rows', '10');
+
+    const priorityLabel = document.createElement('label');
+    priorityLabel.setAttribute('for', 'priority');
+    priorityLabel.textContent = 'Priority';
+
+    const priorityInput = document.createElement('select');
+    priorityInput.setAttribute('name', 'priority');
+    priorityInput.setAttribute('id', 'priority');
+    const normal = document.createElement('option');
+    normal.value = '0';
+    normal.textContent = 'Normal';
+    const high = document.createElement('option');
+    high.value = '1';
+    high.textContent = 'High';
+    const highest = document.createElement('option');
+    normal.value = '2';
+    highest.textContent = 'Highest';
+
+    priorityInput.appendChild(normal);
+    priorityInput.appendChild(high);
+    priorityInput.appendChild(highest);
+
+    const dueDateLabel = document.createElement('label');
+    dueDateLabel.setAttribute('for', 'dueDate');
+
+    const dueDateInput = document.createElement('input');
+    dueDateInput.type = 'date';
+    dueDateInput.name = 'dueDate';
+    dueDateInput.id = 'dueDate';
+
+    const subButton = document.createElement('button');
+    subButton.textContent = 'Submit';
+    subButton.type = 'submit';
+    subButton.id = 'submit';
+
+    form.appendChild(header);
+    form.appendChild(titleLabel);
+    form.appendChild(titleInput);
+    form.appendChild(descLabel);
+    form.appendChild(descInput);
+    form.appendChild(priorityLabel);
+    form.appendChild(priorityInput);
+    form.appendChild(dueDateLabel);
+    form.appendChild(dueDateInput);
+    form.appendChild(subButton);
+
+    return form;
+  }
+
+  function createStatusButton() {
+    const statusButton = document.createElement('button');
+    statusButton.classList.add('imageButton');
+
+    const statusImg = document.createElement('img');
+    statusImg.src = '../images/circle-outline.png';
+
+    statusButton.addEventListener('click', () => {
+      statusImg.src = '../images/circle.png';
+    });
+
+    statusButton.appendChild(statusImg);
+
+    return statusButton;
+  }
+
+  function createDateElement(date) {
+    const dateElement = document.createElement('div');
+    dateElement.innerText = date;
+
+    return dateElement;
+  }
+
   function createProjectElement(title, desc, id) {
     const project = document.createElement('div');
     project.classList.add('project');
@@ -119,27 +218,32 @@ function elementCreatorFactory() {
     project.appendChild(delButton);
     project.appendChild(descElement);
 
-    // project.addEventListener('click', () => {
-    //   project.classList.toggle('highlighted');
-    //   descElement.classList.toggle('hidden');
-    // });
-
     return project;
   }
 
   // create taskElement
-  function createTaskElement(title, id) {
+  function createTaskElement(title, desc, dueDate, priority, id) {
     const task = document.createElement('div');
+    const titleElement = document.createElement('div');
+    titleElement.innerText = title;
     task.classList.add('task');
-    task.innerText = title;
     task.setAttribute('data-taskID', id);
 
+    const statusButton = createStatusButton();
+    const dateElement = createDateElement(dueDate);
     const delButton = createDelButton(id);
     delButtonTasktListener(delButton, id);
     const editButton = createEditButton();
+    const descElement = createDescElement(desc);
+    const formElement = createEditTaskForm();
 
+    task.appendChild(statusButton);
+    task.appendChild(titleElement);
+    task.appendChild(dateElement);
     task.appendChild(editButton);
+    task.appendChild(formElement);
     task.appendChild(delButton);
+    task.appendChild(descElement);
 
     return task;
   }
