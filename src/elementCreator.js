@@ -7,7 +7,7 @@ function elementCreatorFactory() {
     delButton.classList.add('delButton');
 
     const delImg = document.createElement('img');
-    delImg.src = '../images/delete.png';
+    delImg.src = 'images/delete.png';
 
     delButton.appendChild(delImg);
 
@@ -33,7 +33,7 @@ function elementCreatorFactory() {
     editButton.classList.add('popup');
 
     const editImg = document.createElement('img');
-    editImg.src = '../images/archive-edit.png';
+    editImg.src = 'images/archive-edit.png';
 
     editButton.appendChild(editImg);
 
@@ -173,10 +173,10 @@ function elementCreatorFactory() {
     statusButton.classList.add('imageButton');
 
     const statusImg = document.createElement('img');
-    statusImg.src = '../images/circle-outline.png';
+    statusImg.src = 'images/circle-outline.png';
 
     statusButton.addEventListener('click', () => {
-      statusImg.src = '../images/circle.png';
+      statusImg.src = 'images/circle.png';
     });
 
     statusButton.appendChild(statusImg);
